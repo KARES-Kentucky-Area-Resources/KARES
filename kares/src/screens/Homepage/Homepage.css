@@ -29,7 +29,7 @@
 .innerRing {
     height: 94%;
     width: 94%;
-    opacity: 65%;
+    opacity: 70%;
     background-color: rgb(255, 255, 255);
     margin: auto;
     border-radius: 50%;
@@ -54,7 +54,7 @@
 }
 
 .innerRing:hover {
-    background-color: #a8d5d7d5;
+    background-color: #a8d5d7e7;
     height: 98%;
     width: 98%;
     opacity: 100%;
