@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { TextField, Select, MenuItem, FormControl, Modal, InputLabel, Button } from '@material-ui/core/'
+import { TextField, Select, MenuItem, FormControl, Modal, InputLabel, Button, Typography } from '@material-ui/core/'
 import './SimpleForm.css'
+import { Link } from 'react-router-dom'
 
-import { closeSimpleForm } from './redux/simpleFormActions'
+import { closeSimpleForm, simpleFormSubmit } from './redux/simpleFormActions'
 
 
 class SimpleForm extends Component {
@@ -23,11 +24,15 @@ class SimpleForm extends Component {
 
 
     render() {
-        const { county } = this.state
+        const { name, email, phone, county } = this.state
         const { isSimpleFormOpen, closeSimpleForm } = this.props
+        
         return (
             <Modal open={isSimpleFormOpen} onClose={closeSimpleForm}>
                 <div className='simpleFormForm'>
+                    <Typography variant='h5' style={{marginBottom: '15px'}}>
+                        Explore Your Community
+                    </Typography>
                     <TextField
                         label="Name"
                         variant="filled"
@@ -58,7 +63,7 @@ class SimpleForm extends Component {
                             <MenuItem value={'warren'}>Warren County</MenuItem>
                         </Select>
                     </FormControl>
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" onClick={simpleFormSubmit({name, email, phone, county})}>
                         Continue
                     </Button>
                 </div>
@@ -73,4 +78,4 @@ const mapStateToProps = ({ simpleForm }) => {
 }
 
 
-export default connect(mapStateToProps, { closeSimpleForm })(SimpleForm)
+export default connect(mapStateToProps, { closeSimpleForm, simpleFormSubmit })(SimpleForm)
