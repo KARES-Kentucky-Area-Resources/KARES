@@ -9,7 +9,7 @@ import rootReducer from './redux/rootReducer'
 
 import Homepage from './screens/Homepage/Homepage';
 import Resources from './screens/Resources/Resources';
-import ErrorScreen from './screens/ErrorPage/Error';
+import ErrorPage from './screens/ErrorPage/Error';
 import Admin from './screens/Admin/Admin';
 
 
@@ -29,6 +29,7 @@ function App() {
               path='/resources/:county?'
               component={(props) => <Resources county={props} key={props.match.params.filter} />} />
             <Route exact path='/admin' component={Admin}/>
+            <Route path='*' component={ErrorPage} />
           </Switch>
         </Router>
     </Provider>
