@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { TextField, Select, MenuItem, FormControl, Modal, InputLabel, Button, Typography } from '@material-ui/core/'
 import './SimpleForm.css'
-import { Link } from 'react-router-dom'
 
 import { closeSimpleForm, simpleFormSubmit } from './redux/simpleFormActions'
 
@@ -25,7 +24,7 @@ class SimpleForm extends Component {
 
     render() {
         const { name, email, phone, county } = this.state
-        const { isSimpleFormOpen, closeSimpleForm } = this.props
+        const { isSimpleFormOpen, closeSimpleForm, simpleFormSubmit } = this.props
         
         return (
             <Modal open={isSimpleFormOpen} onClose={closeSimpleForm}>
@@ -63,7 +62,7 @@ class SimpleForm extends Component {
                             <MenuItem value={'warren'}>Warren County</MenuItem>
                         </Select>
                     </FormControl>
-                    <Button variant="contained" color="primary" onClick={simpleFormSubmit({name, email, phone, county})}>
+                    <Button variant="contained" color="primary" onClick={() => simpleFormSubmit({name, phone, email, county})}>
                         Continue
                     </Button>
                 </div>

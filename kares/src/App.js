@@ -1,21 +1,36 @@
 import './App.css';
-import { HashRouter as Router, Route } from 'react-router-dom'
-import Homepage from './screens/Homepage/Homepage';
+import { Router, Route, Switch } from 'react-router-dom'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
+import { routerMiddleware } from 'react-router-redux'
+import { createBrowserHistory } from 'history'
 import thunk from 'redux-thunk'
 import rootReducer from './redux/rootReducer'
 
-export const store = createStore(rootReducer, applyMiddleware(thunk))
+import Homepage from './screens/Homepage/Homepage';
+import Resources from './screens/Resources/Resources';
+import ErrorScreen from './screens/ErrorPage/Error';
+import Admin from './screens/Admin/Admin';
+
+
+const history = createBrowserHistory()
+
+const middleware = routerMiddleware(history)
+
+export const store = createStore(rootReducer, applyMiddleware(thunk, middleware))
 
 function App() {
   return (
     <Provider store={store}>
-      <Router>
-        <Route exact path='/'>
-          <Homepage />
-        </Route>
-      </Router>
+        <Router history={history}>
+          <Switch>
+            <Route exact path='/' component={Homepage} />
+            <Route exact
+              path='/resources/:county?'
+              component={(props) => <Resources county={props} key={props.match.params.filter} />} />
+            <Route exact path='/admin' component={Admin}/>
+          </Switch>
+        </Router>
     </Provider>
   );
 }

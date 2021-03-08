@@ -44,7 +44,7 @@ class Footer extends Component {
             <div className={classes.root}>
                 <AppBar position="static" className={classes.footer}>
                     <Toolbar style={{justifyContent: 'space-between'}}>
-                        <Link to='/admin-login' className={classes.footerLink}>
+                        <Link to='/admin' className={classes.footerLink}>
                             Admin Login
                         </Link>
                         <Typography variant="subtitle1" className={classes.copyright}>
