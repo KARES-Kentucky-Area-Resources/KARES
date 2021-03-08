@@ -1,4 +1,6 @@
 import { db } from '../../../shared/services/firebaseConfig'
+import { store } from '../../../App'
+import { push } from 'react-router-redux'
 
 
 export const openSimpleForm = () => ({
@@ -11,9 +13,13 @@ export const closeSimpleForm = () => ({
     payload: false
 })
 
-export const simpleFormSubmit = (formData) => dispatch => {
-
+export const simpleFormSubmit = (formData) => async (dispatch) => {
     const userCollection = db.collection('users')
 
-    userCollection.doc(formData.email).set(formData)
+    await userCollection.doc(formData.email).set(formData)
+
+    store.dispatch(push(`/resources/${formData.county}`))
+
+    dispatch(closeSimpleForm())
+    
 }
