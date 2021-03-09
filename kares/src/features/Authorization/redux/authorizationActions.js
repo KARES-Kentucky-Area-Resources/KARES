@@ -1,4 +1,4 @@
-import { auth, db } from '../../../shared/services/firebaseConfig'
+import { auth } from '../../../shared/services/firebaseConfig'
 
 
 

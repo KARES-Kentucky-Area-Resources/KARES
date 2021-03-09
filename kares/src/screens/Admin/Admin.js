@@ -6,10 +6,9 @@ import Authorization from '../../features/Authorization'
 class Admin extends Component {
     
     render() {
-        const { user, loggedIn } = this.props
+        const { loggedIn } = this.props
         return (
             <div>
-                {console.log(user)}
                 {loggedIn ? <AdminConsole /> : <Authorization />}
             </div>
         )

@@ -1,5 +1,14 @@
 import { db } from '../../../shared/services/firebaseConfig'
 
+function formatPhoneNumber(phoneNumberString) {
+    var cleaned = ('' + phoneNumberString).replace(/\D/g, '')
+    var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
+    if (match) {
+        return '(' + match[1] + ') ' + match[2] + '-' + match[3]
+    }
+    return null
+}
+
 export const openResourceForm = () => ({
     type: 'OPEN_FORM',
     payload: true
@@ -13,6 +22,8 @@ export const closeResourceForm = () => ({
 
 export const resourceFormSubmit = (formData) => async (dispatch) => {
     const resourcesCollection = db.collection('resources')
+
+    formData.phone = formatPhoneNumber(formData.phone)
 
     await resourcesCollection.doc(formData.county).collection(formData.tag).doc(formData.name).set(formData)
 
