@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+// import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import { Card, CardActionArea, CardContent, Button, Typography, CardActions } from '@material-ui/core'
 
 import './Resources.css'

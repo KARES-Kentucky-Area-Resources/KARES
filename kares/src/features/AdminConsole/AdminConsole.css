@@ -1,0 +1,10 @@
+.adminButtons {
+    margin: 15px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.adminButtons button {
+    margin: 0 10px !important;
+}

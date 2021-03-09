@@ -37,7 +37,7 @@ class Authorization extends Component {
                         className='authFormTextField'
                         type='password'
                         onChange={(text) => this.handleTextChange(text, 'password')} />
-                    <Button variant="contained" color="secondary" onClick={() => userSignIn(email, password)}>
+                    <Button variant="contained" color="primary" onClick={() => userSignIn(email, password)}>
                         Sign In
                     </Button>
                 </div>
