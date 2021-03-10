@@ -10,10 +10,10 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 
 class VisitorsTable extends Component {
     render() {
-        const { visitors } = this.props
+        const { tempVisitors } = this.props
         return (
             <div className='visitorsContainer'>
-                { visitors.length === 0 ? <p style={{color: 'white'}}>There are no visitors matching this filter.</p> :
+                { tempVisitors.length === 0 ? <p style={{color: 'white'}}>There are no visitors matching this filter.</p> :
                     <TableContainer component={Paper}>
                         <Table aria-label="simple table">
                             <TableHead>
@@ -25,7 +25,7 @@ class VisitorsTable extends Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {visitors.map((vis) => (
+                                {tempVisitors.map((vis) => (
                                     <TableRow key={vis.name}>
                                         <TableCell component="th" scope="row">
                                             {vis.name}
@@ -45,8 +45,9 @@ class VisitorsTable extends Component {
 }
 
 const mapStateToProps = ({ visitorsTable }) => {
-    const { visitors } = visitorsTable
-    return { visitors }
+    const { allVisitors, temp } = visitorsTable
+    const { tempVisitors } = temp
+    return { allVisitors, tempVisitors }
 }
 
 export default connect(mapStateToProps, null)(VisitorsTable)
