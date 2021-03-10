@@ -1,6 +1,9 @@
 const INITIAL_STATE = {
     isLoading: true,
-    visitors: []
+    allVisitors: [],
+    temp: {
+        tempVisitors: []
+    }
 }
 
 const visitorsTableReducer = (state = INITIAL_STATE, action) => {
@@ -20,7 +23,15 @@ const visitorsTableReducer = (state = INITIAL_STATE, action) => {
         case 'SET_VISITORS': {
             return {
                 ...state,
-                visitors: action.payload
+                allVisitors: action.payload
+            }
+        }
+        case 'SET_TEMP_VISITORS': {
+            return {
+                ...state,
+                temp: {
+                    tempVisitors: action.payload
+                }
             }
         }
         default: return state

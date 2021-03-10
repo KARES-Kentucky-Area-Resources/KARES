@@ -2,7 +2,7 @@ import { TextField, Typography, withStyles } from '@material-ui/core'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
-import { loadAllVisitors } from '../VisitorsTable/redux/visitorsTableActions'
+import { filterFetchedVisitors } from '../VisitorsTable/redux/visitorsTableActions'
 
 
 const styles = theme => ({
@@ -17,6 +17,12 @@ const styles = theme => ({
         borderColor: 'white',
         textAlign: 'left',
         marginBottom: '10px'
+    },
+    actionButtonContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })
 
@@ -35,7 +41,7 @@ class VisitorsFilter extends Component {
 
     render() {
         const { name, county } = this.state
-        const { loadAllVisitors, classes } = this.props
+        const { filterFetchedVisitors, classes, allVisitors } = this.props
         return (
 
             <div className={classes.visitorsFilter}>
@@ -44,11 +50,11 @@ class VisitorsFilter extends Component {
                 </Typography>
                 <hr />
                 <TextField
-                        label="Name"
-                        variant="outlined"
-                        color='primary'
-                        className={classes.formControl}
-                        onChange={(text) => this.handleChange(text, 'name')} />
+                    label="Name"
+                    variant="outlined"
+                    color='primary'
+                    className={classes.formControl}
+                    onChange={(text) => this.handleChange(text, 'name')} />
                 <FormControl variant='outlined' className={classes.formControl}>
                     <InputLabel>County</InputLabel>
                     <Select
@@ -69,24 +75,35 @@ class VisitorsFilter extends Component {
                     </Select>
                 </FormControl>
 
+                <div className={classes.actionButtonContainer}>
+                    <Button
+                        variant='contained'
+                        color='primary'
+                        style={{ marginTop: '10px' }}
+                        onClick={() => filterFetchedVisitors(allVisitors, name, county)}>
+                        Apply Filters
+                    </Button>
+                    <Button
+                        variant='contained'
+                        color='secondary'
+                        style={{ marginTop: '10px' }}
+                        onClick={() => filterFetchedVisitors(allVisitors)}>
+                        Reset Filters
+                    </Button>
+                </div>
 
-                <Button
-                    variant='contained'
-                    color='primary'
-                    style={{ marginTop: '10px' }}
-                    onClick={() => loadAllVisitors(name, county)}>
-                    Reload Visitors
-                </Button>
             </div>
         )
     }
 }
 
-const mapStateToProps = ({ resourceForm }) => {
+const mapStateToProps = ({ resourceForm, visitorsTable }) => {
     const { isResourceFormOpen } = resourceForm
-    return { isResourceFormOpen }
+    const { allVisitors, temp } = visitorsTable
+    const { tempVisitors } = temp
+    return { isResourceFormOpen, tempVisitors, allVisitors }
 }
 
 
 
-export default connect(mapStateToProps, { loadAllVisitors })(withStyles(styles)(VisitorsFilter))
+export default connect(mapStateToProps, { filterFetchedVisitors })(withStyles(styles)(VisitorsFilter))

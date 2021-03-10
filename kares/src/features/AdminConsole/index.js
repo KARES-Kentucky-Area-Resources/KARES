@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ResourceForm from '../ResourceForm'
 import VisitorsTable from '../VisitorsTable'
-import { loadAllVisitors } from '../VisitorsTable/redux/visitorsTableActions'
+import { loadAllVisitors, filterFetchedVisitors } from '../VisitorsTable/redux/visitorsTableActions'
 import { openResourceForm, closeResourceForm } from '../ResourceForm/redux/resourceFormActions'
 import { AppBar, Button, CircularProgress, Toolbar } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
@@ -47,6 +47,10 @@ class AdminConsole extends Component {
 
     componentDidMount() {
         this.props.loadAllVisitors()
+        console.log(this.props.allVisitors)
+        this.props.filterFetchedVisitors(this.props.allVisitors)
+        console.log(this.props.tempVisitors)
+
     }
 
     render() {
@@ -93,8 +97,9 @@ class AdminConsole extends Component {
 
 const mapStateToProps = ({ resourceForm, visitorsTable }) => {
     const { isResourceFormOpen } = resourceForm
-    const { isLoading } = visitorsTable
-    return { isResourceFormOpen, isLoading }
+    const { isLoading, allVisitors, temp } = visitorsTable
+    const { tempVisitors } = temp
+    return { isResourceFormOpen, isLoading, allVisitors, tempVisitors }
 }
 
-export default connect(mapStateToProps, { openResourceForm, closeResourceForm, loadAllVisitors })(withStyles(styles)(AdminConsole))
+export default connect(mapStateToProps, { openResourceForm, closeResourceForm, loadAllVisitors, filterFetchedVisitors })(withStyles(styles)(AdminConsole))
