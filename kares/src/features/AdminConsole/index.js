@@ -4,35 +4,41 @@ import ResourceForm from '../ResourceForm'
 import VisitorsTable from '../VisitorsTable'
 import { loadAllVisitors } from '../VisitorsTable/redux/visitorsTableActions'
 import { openResourceForm, closeResourceForm } from '../ResourceForm/redux/resourceFormActions'
-import { AppBar, Button, Toolbar } from '@material-ui/core'
+import { AppBar, Button, CircularProgress, Toolbar } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 
 import './AdminConsole.css'
+import VisitorsFilter from '../VisitorsFilter'
 
 const styles = theme => ({
     root: {
         flexGrow: 1
     },
     navbar: {
-        backgroundColor: '#a8d5d7',
-        color: 'black',
+        color: 'white',
         position: 'static',
         fontWeight: '500',
     },
-    adminButton: {
-        backgroundColor: '#a8d5d7',
-        color: 'black',
-        transition: 'all 0.25s',
-        fontWeight: '500',
-
-        '&:hover': {
-            backgroundColor: '#659294',
-            color: 'white'
-        }
-    },
     mainContainer: {
         minHeight: '100vh',
-        backgroundColor: 'rgba(0, 0, 0, 0.15);'
+        backgroundColor: 'rgba(0, 0, 0, 0.85);'
+    },
+    visitorsTable: {
+        display: 'flex',
+        margin: '20px auto',
+        justifyContent: 'space-evenly'
+    },
+    table: {
+        flexBasis: '70%'
+    },
+    tableActions: {
+        flexBasis: '25%',
+        display: 'flex',
+        justifyContent: 'flex-start',
+        flexDirection: 'column'
+    },
+    adminButton: {
+        margin: '15px'
     }
 })
 
@@ -44,7 +50,7 @@ class AdminConsole extends Component {
     }
 
     render() {
-        const { isResourceFormOpen, closeResourceForm, openResourceForm, loadAllVisitors, classes } = this.props
+        const { isResourceFormOpen, closeResourceForm, openResourceForm, classes, isLoading } = this.props
         return (
             <div className={classes.mainContainer}>
                 <AppBar className={classes.navbar}>
@@ -53,25 +59,31 @@ class AdminConsole extends Component {
                     </Toolbar>
                 </AppBar>
 
-                <div className='adminButtons'>
-                    <Button
-                        variant='contained'
-                        color='secondary'
-                        className={classes.adminButton}
-                        onClick={isResourceFormOpen ? closeResourceForm : openResourceForm}>
-                        Create New Resource
-                    </Button>
 
-                    <Button
-                        variant='contained'
-                        color='secondary'
-                        className={classes.adminButton}
-                        onClick={loadAllVisitors}>
-                        Reload Visitors
-                    </Button>
-                </div>
+                <Button
+                    variant='contained'
+                    color='primary'
+                    className={classes.adminButton}
+                    onClick={isResourceFormOpen ? closeResourceForm : openResourceForm}>
+                    Create New Resource
+                 </Button>
 
-                <VisitorsTable />
+                {
+                    isLoading ? <CircularProgress color='primary' /> :
+
+                        <div className={classes.visitorsTable}>
+                            <div className={classes.table}>
+                                <VisitorsTable />
+                            </div>
+                            <div className={classes.tableActions}>
+                                <VisitorsFilter />
+                            </div>
+                        </div>
+                }
+
+
+
+
 
                 <ResourceForm />
             </div>
@@ -79,9 +91,10 @@ class AdminConsole extends Component {
     }
 }
 
-const mapStateToProps = ({ resourceForm }) => {
+const mapStateToProps = ({ resourceForm, visitorsTable }) => {
     const { isResourceFormOpen } = resourceForm
-    return { isResourceFormOpen }
+    const { isLoading } = visitorsTable
+    return { isResourceFormOpen, isLoading }
 }
 
 export default connect(mapStateToProps, { openResourceForm, closeResourceForm, loadAllVisitors })(withStyles(styles)(AdminConsole))

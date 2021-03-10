@@ -33,6 +33,9 @@ class ResourceForm extends Component {
         return (
             <Modal open={isResourceFormOpen} onClose={closeResourceForm}>
                 <div className='simpleFormForm'>
+                    <Typography variant='h5' style={{ marginBottom: '15px' }}>
+                        Add new Resource
+                    </Typography>
                     <FormControl variant='filled' className='simpleFormInputField'>
                         <InputLabel>County</InputLabel>
                         <Select
@@ -49,9 +52,6 @@ class ResourceForm extends Component {
                             <MenuItem value={'Warren County'}>Warren County</MenuItem>
                         </Select>
                     </FormControl>
-                    <Typography variant='h5' style={{ marginBottom: '15px' }}>
-                        Add new Resource
-                    </Typography>
                     <TextField
                         label="Name"
                         variant="filled"
@@ -111,7 +111,7 @@ class ResourceForm extends Component {
                     </FormControl>
 
 
-                    <Button variant="contained" color="primary" onClick={() => resourceFormSubmit({county, name, phone, address, website1, website2, meeting_time, tag})}>
+                    <Button variant="contained" color="primary" onClick={() => resourceFormSubmit({ county, name, phone, address, website1, website2, meeting_time, tag })}>
                         Add
                     </Button>
                 </div>

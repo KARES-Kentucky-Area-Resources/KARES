@@ -25,13 +25,11 @@ class Authorization extends Component {
             <div className='authFormMain'>
                 <div className='authFormForm'>
                     <TextField
-                        id="filled-basic"
                         label="Email Address"
                         variant="filled"
                         className='authFormTextField'
                         onChange={(text) => this.handleTextChange(text, 'email')} />
                     <TextField
-                        id="filled-basic"
                         label="Password"
                         variant="filled"
                         className='authFormTextField'
