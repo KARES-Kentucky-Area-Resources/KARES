@@ -1,9 +1,10 @@
 import { db } from '../../../shared/services/firebaseConfig'
 
 
-export const loadAllVisitors = () => async (dispatch) => {
+export const loadAllVisitors = (name = '', county = 'All') => async (dispatch) => {
     const visitors = db.collection('users')
-    const returnArray = []
+    let returnArray = []
+    let filteredArray = []
 
     dispatch(beginFetchingVisitors())
 
@@ -14,7 +15,23 @@ export const loadAllVisitors = () => async (dispatch) => {
                 returnArray.push(doc.data())
             })
         })
-        dispatch(setVisitors(returnArray))
+
+        filteredArray = returnArray.filter(vis => vis)
+
+        if (county !== 'All') {
+            filteredArray = filteredArray.filter(vis => vis.county === county)
+        }
+        if (name !== '') {
+            filteredArray = filteredArray.filter(vis => vis.name.includes(name))
+        }
+
+        
+        if (name === '' & county === 'All') {
+            dispatch(setVisitors(returnArray))
+        } else {
+            dispatch(setVisitors(filteredArray))
+        }
+       
     }
     catch (e) {
 

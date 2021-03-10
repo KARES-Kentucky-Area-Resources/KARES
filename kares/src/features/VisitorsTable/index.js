@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './VisitorsTable.css'
 
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, CircularProgress, Paper } from '@material-ui/core'
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core'
 
 
 
@@ -10,10 +10,10 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Circu
 
 class VisitorsTable extends Component {
     render() {
-        const { isLoading, visitors } = this.props
+        const { visitors } = this.props
         return (
             <div className='visitorsContainer'>
-                { isLoading ? <CircularProgress color="primary" /> :
+                { visitors.length === 0 ? <p style={{color: 'white'}}>There are no visitors matching this filter.</p> :
                     <TableContainer component={Paper}>
                         <Table aria-label="simple table">
                             <TableHead>
@@ -45,8 +45,8 @@ class VisitorsTable extends Component {
 }
 
 const mapStateToProps = ({ visitorsTable }) => {
-    const { isLoading, visitors } = visitorsTable
-    return { isLoading, visitors }
+    const { visitors } = visitorsTable
+    return { visitors }
 }
 
 export default connect(mapStateToProps, null)(VisitorsTable)
