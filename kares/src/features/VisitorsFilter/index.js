@@ -39,6 +39,12 @@ class VisitorsFilter extends Component {
         this.setState({ [key]: text.target.value })
     }
 
+    resetFilter = () => {
+        this.props.filterFetchedVisitors(this.props.allVisitors)
+        this.setState({ name: '', county: 'All' })
+        console.log(this.state)
+    }
+
     render() {
         const { name, county } = this.state
         const { filterFetchedVisitors, classes, allVisitors } = this.props
@@ -54,6 +60,7 @@ class VisitorsFilter extends Component {
                     variant="outlined"
                     color='primary'
                     className={classes.formControl}
+                    value={name}
                     onChange={(text) => this.handleChange(text, 'name')} />
                 <FormControl variant='outlined' className={classes.formControl}>
                     <InputLabel>County</InputLabel>
@@ -87,7 +94,7 @@ class VisitorsFilter extends Component {
                         variant='contained'
                         color='secondary'
                         style={{ marginTop: '10px' }}
-                        onClick={() => filterFetchedVisitors(allVisitors)}>
+                        onClick={() => this.resetFilter()}>
                         Reset Filters
                     </Button>
                 </div>

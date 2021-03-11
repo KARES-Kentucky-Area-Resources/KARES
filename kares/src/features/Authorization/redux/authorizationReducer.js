@@ -43,6 +43,13 @@ const authFormReducer = (state = INITIAL_STATE, action) => {
                 }
             }
         }
+        case 'USER_LOG_OUT': {
+            return {
+                ...state,
+                loggedIn: false,
+                user: {}
+            }
+        }
         default: return state
     }
 }

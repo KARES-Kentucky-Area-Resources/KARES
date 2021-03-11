@@ -4,24 +4,16 @@ import ResourceForm from '../ResourceForm'
 import VisitorsTable from '../VisitorsTable'
 import { loadAllVisitors, filterFetchedVisitors } from '../VisitorsTable/redux/visitorsTableActions'
 import { openResourceForm, closeResourceForm } from '../ResourceForm/redux/resourceFormActions'
-import { AppBar, Button, CircularProgress, Toolbar } from '@material-ui/core'
+import { Button, CircularProgress } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 
-import './AdminConsole.css'
+import './VisitorConsole.css'
 import VisitorsFilter from '../VisitorsFilter'
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
     root: {
         flexGrow: 1
-    },
-    navbar: {
-        color: 'white',
-        position: 'static',
-        fontWeight: '500',
-    },
-    mainContainer: {
-        minHeight: '100vh',
-        backgroundColor: 'rgba(0, 0, 0, 0.85);'
     },
     visitorsTable: {
         display: 'flex',
@@ -37,45 +29,49 @@ const styles = theme => ({
         justifyContent: 'flex-start',
         flexDirection: 'column'
     },
-    adminButton: {
-        margin: '15px'
+    backButton: {
+        margin: '23px',
+        marginBottom: '10px',
+        
+        '& a': {
+            textDecoration: 'none',
+            color: 'black'
+        }
     }
 })
 
 
-class AdminConsole extends Component {
+class VisitorConsole extends Component {
 
     componentDidMount() {
         this.props.loadAllVisitors()
-        console.log(this.props.allVisitors)
         this.props.filterFetchedVisitors(this.props.allVisitors)
-        console.log(this.props.tempVisitors)
-
     }
 
     render() {
-        const { isResourceFormOpen, closeResourceForm, openResourceForm, classes, isLoading } = this.props
+        const { classes, isLoading } = this.props
         return (
             <div className={classes.mainContainer}>
-                <AppBar className={classes.navbar}>
-                    <Toolbar>
-                        <p>Admin Console</p>
-                    </Toolbar>
-                </AppBar>
 
-
-                <Button
+                {/* <Button
                     variant='contained'
                     color='primary'
                     className={classes.adminButton}
                     onClick={isResourceFormOpen ? closeResourceForm : openResourceForm}>
                     Create New Resource
-                 </Button>
+                 </Button> */}
+
+                <Button
+                    variant='contained'
+                    className={classes.backButton}>
+                        <Link to='/admin'>Back</Link>
+                </Button>
 
                 {
                     isLoading ? <CircularProgress color='primary' /> :
 
                         <div className={classes.visitorsTable}>
+
                             <div className={classes.table}>
                                 <VisitorsTable />
                             </div>
@@ -102,4 +98,4 @@ const mapStateToProps = ({ resourceForm, visitorsTable }) => {
     return { isResourceFormOpen, isLoading, allVisitors, tempVisitors }
 }
 
-export default connect(mapStateToProps, { openResourceForm, closeResourceForm, loadAllVisitors, filterFetchedVisitors })(withStyles(styles)(AdminConsole))
+export default connect(mapStateToProps, { openResourceForm, closeResourceForm, loadAllVisitors, filterFetchedVisitors })(withStyles(styles)(VisitorConsole))

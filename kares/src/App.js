@@ -25,10 +25,14 @@ function App() {
         <Router history={history}>
           <Switch>
             <Route exact path='/' component={Homepage} />
-            <Route exact
-              path='/resources/:county?'
-              component={(props) => <Resources county={props} key={props.match.params.filter} />} />
-            <Route exact path='/admin' component={Admin}/>
+            <Route 
+                exact
+                path='/resources/:county?'
+                component={(props) => <Resources county={props} key={props.match.params.county} />} />
+            <Route 
+                exact 
+                path='/admin/:page?' 
+                component={(props) => <Admin page={props} key={props.match.params.page}/>}/>
             <Route path='*' component={ErrorPage} />
           </Switch>
         </Router>

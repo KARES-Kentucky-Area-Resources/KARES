@@ -54,10 +54,6 @@ export const filterFetchedVisitors = (visitors, name = '', county = 'All') => di
 
 
 
-
-
-
-
 const beginFetchingVisitors = () => ({
     type: 'START_LOADING'
 })
