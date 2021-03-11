@@ -1,4 +1,4 @@
-import { db } from '../../../shared/services/firebaseConfig'
+import { db } from '../../../../shared/services/firebaseConfig'
 
 
 export const loadAllVisitors = (name = '', county = 'All') => async (dispatch) => {

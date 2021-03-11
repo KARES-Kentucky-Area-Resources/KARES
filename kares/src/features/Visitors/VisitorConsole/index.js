@@ -53,14 +53,6 @@ class VisitorConsole extends Component {
         return (
             <div className={classes.mainContainer}>
 
-                {/* <Button
-                    variant='contained'
-                    color='primary'
-                    className={classes.adminButton}
-                    onClick={isResourceFormOpen ? closeResourceForm : openResourceForm}>
-                    Create New Resource
-                 </Button> */}
-
                 <Button
                     variant='contained'
                     className={classes.backButton}>
@@ -80,10 +72,6 @@ class VisitorConsole extends Component {
                             </div>
                         </div>
                 }
-
-
-
-
 
                 <ResourceForm />
             </div>
