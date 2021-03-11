@@ -5,6 +5,7 @@ import { logOut } from '../../features/Authorization/redux/authorizationActions'
 import VisitorConsole from '../../features/VisitorConsole'
 import Authorization from '../../features/Authorization'
 import AdminOptions from '../../features/AdminOptions'
+import ResourceConsole from '../../features/Resource/ResourceConsole'
 
 const styles = theme => ({
     navbar: {
@@ -36,6 +37,7 @@ class Admin extends Component {
                         </AppBar>
                         {!page ? <AdminOptions /> : null}
                         {page === 'visitor' ? <VisitorConsole /> : null}
+                        {page === 'resources' ? <ResourceConsole /> : null}
                     </div>
                     :
                     <Authorization />

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { TextField, Select, MenuItem, FormControl, Modal, InputLabel, Button, Typography } from '@material-ui/core/'
-import { closeResourceForm, resourceFormSubmit } from './redux/resourceFormActions'
+import { closeResourceForm, resourceFormSubmit } from './redux/resourceActions'
 
 
 
@@ -43,13 +43,13 @@ class ResourceForm extends Component {
                             onChange={(val) => this.handleChange(val, 'county')}
                         >
                             <MenuItem value={'none'}>None</MenuItem>
-                            <MenuItem value={'Allen County'}>Allen County</MenuItem>
-                            <MenuItem value={'Russell County'}>Russell County</MenuItem>
-                            <MenuItem value={'Barren County'}>Barren County</MenuItem>
-                            <MenuItem value={'Metcalfe County'}>Metcalfe County</MenuItem>
-                            <MenuItem value={'Edmonson County'}>Edmonson County</MenuItem>
-                            <MenuItem value={'Green County'}>Green County</MenuItem>
-                            <MenuItem value={'Warren County'}>Warren County</MenuItem>
+                            <MenuItem value={'Allen'}>Allen County</MenuItem>
+                            <MenuItem value={'Russell'}>Russell County</MenuItem>
+                            <MenuItem value={'Barren'}>Barren County</MenuItem>
+                            <MenuItem value={'Metcalfe'}>Metcalfe County</MenuItem>
+                            <MenuItem value={'Edmonson'}>Edmonson County</MenuItem>
+                            <MenuItem value={'Green'}>Green County</MenuItem>
+                            <MenuItem value={'Warren'}>Warren County</MenuItem>
                         </Select>
                     </FormControl>
                     <TextField

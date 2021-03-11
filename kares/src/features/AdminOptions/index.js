@@ -67,7 +67,7 @@ class AdminOptions extends Component {
                     </CardContent>
                     <CardActions>
                         <Button size="medium" color="primary" className={classes.cardButton} style={{ marginLeft: 'auto' }}>
-                            <Link to='/admin/rescoures'>
+                            <Link to='/admin/resources'>
                                 GO
                             </Link>
                         </Button>
