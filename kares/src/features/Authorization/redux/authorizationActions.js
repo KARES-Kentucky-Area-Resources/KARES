@@ -2,6 +2,7 @@ import { auth } from '../../../shared/services/firebaseConfig'
 
 
 
+
 export const userSignIn = (email, password) => async (dispatch) => {
     dispatch(userSignInBegin())
     try {
@@ -24,6 +25,10 @@ export const userSignIn = (email, password) => async (dispatch) => {
     }
 }
 
+export const logOut = () => dispatch => {
+    dispatch(userLogOut())
+}
+
 
 const userSignInBegin = () => ({
     type: 'USER_LOGGED_IN_BEGIN'
@@ -37,4 +42,8 @@ const userSignInFailed = (message) => ({
 const userSignInSuccess = (data) => ({
     type: 'USER_LOGGED_IN_SUCCESS',
     payload: data
+})
+
+const userLogOut = () => ({
+    type: 'USER_LOG_OUT',
 })

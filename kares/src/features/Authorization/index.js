@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { TextField, Button } from '@material-ui/core/'
+import { TextField, Button, Typography } from '@material-ui/core/'
 import './Authorization.css'
 
 import { userSignIn } from './redux/authorizationActions'
@@ -24,6 +24,10 @@ class Authorization extends Component {
         return (
             <div className='authFormMain'>
                 <div className='authFormForm'>
+                    <Typography variant='h4'>
+                        Admin Login
+                    </Typography>
+                    <br/>
                     <TextField
                         label="Email Address"
                         variant="filled"
