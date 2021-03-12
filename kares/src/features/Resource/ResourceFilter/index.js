@@ -1,7 +1,8 @@
-import { withStyles } from '@material-ui/core'
+import { Button, withStyles } from '@material-ui/core'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { TextField, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
+import { applyResourceFilter } from '../ResourceTable/redux/resourceTableActions'
 
 const styles = theme => ({
     filterContainer: {
@@ -38,7 +39,7 @@ class ResourceFilter extends Component {
     }
 
     render() {
-        const { classes } = this.props
+        const { classes, applyResourceFilter, allResources } = this.props
         const { name, tag, county } = this.state
         return (
             <div className={classes.filterContainer}>
@@ -86,18 +87,28 @@ class ResourceFilter extends Component {
                         label='county'
                     >
                         <MenuItem value={'All'}>All</MenuItem>
-                        <MenuItem value={'Allen County'}>Allen County</MenuItem>
-                        <MenuItem value={'Russell County'}>Russell County</MenuItem>
-                        <MenuItem value={'Barren County'}>Barren County</MenuItem>
-                        <MenuItem value={'Metcalfe County'}>Metcalfe County</MenuItem>
-                        <MenuItem value={'Edmonson County'}>Edmonson County</MenuItem>
-                        <MenuItem value={'Green County'}>Green County</MenuItem>
-                        <MenuItem value={'Warren County'}>Warren County</MenuItem>
+                        <MenuItem value={'Allen'}>Allen County</MenuItem>
+                        <MenuItem value={'Russell'}>Russell County</MenuItem>
+                        <MenuItem value={'Barren'}>Barren County</MenuItem>
+                        <MenuItem value={'Metcalfe'}>Metcalfe County</MenuItem>
+                        <MenuItem value={'Edmonson'}>Edmonson County</MenuItem>
+                        <MenuItem value={'Green'}>Green County</MenuItem>
+                        <MenuItem value={'Warren'}>Warren County</MenuItem>
                     </Select>
                 </FormControl>
+                <Button variant='contained' color='primary' onClick={() => applyResourceFilter(allResources, name, tag, county)}>
+                    Apply Filter
+                </Button>
             </div>
         )
     }
 }
 
-export default connect(null, null)(withStyles(styles)(ResourceFilter))
+const mapStateToProps = ({ resourceTable }) => {
+    const { tempResources, allResources } = resourceTable
+    return { tempResources, allResources }
+}
+
+
+
+export default connect(mapStateToProps, { applyResourceFilter })(withStyles(styles)(ResourceFilter))

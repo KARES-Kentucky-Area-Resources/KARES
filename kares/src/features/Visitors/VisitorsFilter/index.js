@@ -49,7 +49,6 @@ class VisitorsFilter extends Component {
         const { name, county } = this.state
         const { filterFetchedVisitors, classes, allVisitors } = this.props
         return (
-
             <div className={classes.visitorsFilter}>
                 <Typography variant='subtitle1' style={{ textAlign: 'center' }}>
                     Filter

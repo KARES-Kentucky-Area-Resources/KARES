@@ -7,6 +7,7 @@ import ResourceForm from '../ResourceForm'
 import CountyForm from '../CountyForm'
 
 import { openCountyForm, openResourceForm, setCounties } from '../ResourceForm/redux/resourceActions'
+import ResourceTable from '../ResourceTable'
 
 const styles = theme => ({
     backButton: {
@@ -65,7 +66,7 @@ class ResourceConsole extends Component {
                     <ResourceFilter />
                 </div> 
                 <div className={classes.resourceTable}>
-
+                    <ResourceTable />
                 </div>
 
                 <ResourceForm />
