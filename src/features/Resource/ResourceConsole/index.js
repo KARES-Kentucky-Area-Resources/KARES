@@ -4,9 +4,8 @@ import { withStyles, Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import ResourceFilter from '../ResourceFilter'
 import ResourceForm from '../ResourceForm'
-import CountyForm from '../CountyForm'
 
-import { openCountyForm, openResourceForm, setCounties } from '../ResourceForm/redux/resourceActions'
+import { openResourceForm } from '../ResourceForm/redux/resourceActions'
 import ResourceTable from '../ResourceTable'
 
 const styles = theme => ({
@@ -32,12 +31,8 @@ const styles = theme => ({
 
 class ResourceConsole extends Component {
 
-    componentDidMount() {
-        this.props.setCounties()
-    }
-
     render() {
-        const { classes, openResourceForm, openCountyForm } = this.props
+        const { classes, openResourceForm } = this.props
         return (
             <div>
                 <Button
@@ -53,13 +48,6 @@ class ResourceConsole extends Component {
                         onClick={openResourceForm}>
                         Create New Resource
                     </Button>
-                    <Button
-                        variant='contained'
-                        color='primary'
-                        className={classes.resourceButton}
-                        onClick={openCountyForm}>
-                        Create New County
-                    </Button>
                 </div>
 
                 <div className={classes.resourceFilter}>
@@ -70,7 +58,6 @@ class ResourceConsole extends Component {
                 </div>
 
                 <ResourceForm />
-                <CountyForm />
             </div>
         )
     }
@@ -80,4 +67,4 @@ const mapStateToProps = ({ resourceForm }) => {
     return {}
 }
 
-export default connect(mapStateToProps, { openCountyForm, openResourceForm, setCounties })(withStyles(styles)(ResourceConsole))
+export default connect(mapStateToProps, { openResourceForm })(withStyles(styles)(ResourceConsole))

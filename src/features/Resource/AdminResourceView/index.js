@@ -2,6 +2,7 @@ import { withStyles, Modal, Typography, FormControl, InputLabel, Select, MenuIte
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { closeAdminResourceForm, updateResourceInfo, deleteResource } from '../AdminResourceView/redux/adminResourceViewActions'
+import MuiAlert from '@material-ui/lab/Alert';
 
 const styles = theme => ({
     actionButtons: {
@@ -34,13 +35,14 @@ class AdminResourceView extends Component {
 
 
     render() {
-        const { closeAdminResourceForm, isOpen, classes, updateResourceInfo, deleteResource } = this.props
+        const { closeAdminResourceForm, isOpen, classes, updateResourceInfo, deleteResource, resourceViewError } = this.props
         const { county, name, phone, address, website1, website2, meeting_time, tag } = this.state
         return (
             <Modal open={isOpen} onClose={closeAdminResourceForm}>
                 <div className='simpleFormForm'>
+                {resourceViewError ? <MuiAlert style={{marginBottom: '15px'}} elevation={6} variant="filled" severity='error'>{resourceViewError}</MuiAlert> : null}
                     <Typography variant='h5' style={{ marginBottom: '15px' }}>
-                        Add new Resource
+                        {name}
                     </Typography>
                     <FormControl variant='filled' className='simpleFormInputField'>
                         <InputLabel>County</InputLabel>
@@ -48,14 +50,8 @@ class AdminResourceView extends Component {
                             value={county}
                             onChange={(val) => this.handleChange(val, 'county')}
                         >
-                            <MenuItem value={'none'}>None</MenuItem>
-                            <MenuItem value={'Allen'}>Allen County</MenuItem>
                             <MenuItem value={'Russell'}>Russell County</MenuItem>
                             <MenuItem value={'Barren'}>Barren County</MenuItem>
-                            <MenuItem value={'Metcalfe'}>Metcalfe County</MenuItem>
-                            <MenuItem value={'Edmonson'}>Edmonson County</MenuItem>
-                            <MenuItem value={'Green'}>Green County</MenuItem>
-                            <MenuItem value={'Warren'}>Warren County</MenuItem>
                         </Select>
                     </FormControl>
                     <TextField
@@ -138,8 +134,8 @@ class AdminResourceView extends Component {
 }
 
 const mapStateToProps = ({ adminResourceView }) => {
-    const { isOpen, formInfo } = adminResourceView
-    return { isOpen, formInfo }
+    const { isOpen, formInfo, resourceViewError } = adminResourceView
+    return { isOpen, formInfo, resourceViewError }
 }
 
 export default connect(mapStateToProps, { closeAdminResourceForm, updateResourceInfo, deleteResource })(withStyles(styles)(AdminResourceView))

@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
-    isSimpleFormOpen: false
+    isSimpleFormOpen: false,
+    simpleFormError: null
 }
 
 const simpleFormReducer = (state = INITIAL_STATE, action) => {
@@ -14,6 +15,12 @@ const simpleFormReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 isSimpleFormOpen: action.payload
+            }
+        }
+        case "SET_FORM_ERROR": {
+            return {
+                ...state,
+                simpleFormError: action.payload
             }
         }
         default: return state
