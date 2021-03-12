@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { TextField, Select, MenuItem, FormControl, Modal, InputLabel, Button, Typography } from '@material-ui/core/'
 import { closeResourceForm, resourceFormSubmit } from './redux/resourceActions'
-
+import MuiAlert from '@material-ui/lab/Alert';
 
 
 
@@ -10,14 +10,14 @@ class ResourceForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            county: 'none',
-            name: null,
-            phone: null,
-            address: null,
-            website1: null,
-            website2: null,
-            meeting_time: null,
-            tag: 'none'
+            county: '',
+            name: '',
+            phone: '',
+            address: '',
+            website1: '',
+            website2: '',
+            meeting_time: '',
+            tag: ''
         }
     }
 
@@ -28,11 +28,12 @@ class ResourceForm extends Component {
 
     render() {
         const { county, name, phone, address, website1, website2, meeting_time, tag } = this.state
-        const { isResourceFormOpen, closeResourceForm, resourceFormSubmit } = this.props
+        const { isResourceFormOpen, closeResourceForm, resourceFormSubmit, resourceFormError } = this.props
 
         return (
             <Modal open={isResourceFormOpen} onClose={closeResourceForm}>
                 <div className='simpleFormForm'>
+                {resourceFormError ? <MuiAlert style={{marginBottom: '15px'}} elevation={6} variant="filled" severity='error'>{resourceFormError}</MuiAlert> : null}
                     <Typography variant='h5' style={{ marginBottom: '15px' }}>
                         Add new Resource
                     </Typography>
@@ -42,14 +43,8 @@ class ResourceForm extends Component {
                             value={county}
                             onChange={(val) => this.handleChange(val, 'county')}
                         >
-                            <MenuItem value={'none'}>None</MenuItem>
-                            <MenuItem value={'Allen'}>Allen County</MenuItem>
                             <MenuItem value={'Russell'}>Russell County</MenuItem>
                             <MenuItem value={'Barren'}>Barren County</MenuItem>
-                            <MenuItem value={'Metcalfe'}>Metcalfe County</MenuItem>
-                            <MenuItem value={'Edmonson'}>Edmonson County</MenuItem>
-                            <MenuItem value={'Green'}>Green County</MenuItem>
-                            <MenuItem value={'Warren'}>Warren County</MenuItem>
                         </Select>
                     </FormControl>
                     <TextField
@@ -89,7 +84,6 @@ class ResourceForm extends Component {
                             value={tag}
                             onChange={(val) => this.handleChange(val, 'tag')}
                         >
-                            <MenuItem value={'none'}>None</MenuItem>
                             <MenuItem value={'mental-drug-alch'}>Mental, Drug, Alcohol Treatment</MenuItem>
                             <MenuItem value={'substance-abuse'}>Substance Abuse</MenuItem>
                             <MenuItem value={'domestic-violence'}>Domestic Violence</MenuItem>
@@ -121,8 +115,8 @@ class ResourceForm extends Component {
 }
 
 const mapStateToProps = ({ resourceForm }) => {
-    const { isResourceFormOpen } = resourceForm
-    return { isResourceFormOpen }
+    const { isResourceFormOpen, resourceFormError } = resourceForm
+    return { isResourceFormOpen, resourceFormError }
 }
 
 

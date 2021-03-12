@@ -31,7 +31,7 @@ class ResourceTable extends Component {
         const { tempResources, classes, openAdminResourceForm, isOpen} = this.props
         return (
             <div>
-                { tempResources.length === 0 ? <p style={{ color: 'white' }}>There are no resources matching this filter.</p> :
+                { tempResources.length === 0 ? <p style={{ color: 'white', textAlign: 'center' }}>There are no resources matching this filter.</p> :
                     <TableContainer component={Paper} className={classes.table}>
                         <Table aria-label="simple table">
                             <TableHead>

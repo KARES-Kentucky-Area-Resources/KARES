@@ -1,15 +1,33 @@
 import { db } from '../../../shared/services/firebaseConfig'
 import { store } from '../../../App'
 import { push } from 'react-router-redux'
+import { validatePhoneNumber, validateEmail } from '../../../shared/helperFunctions'
 
-function formatPhoneNumber(phoneNumberString) {
-    var cleaned = ('' + phoneNumberString).replace(/\D/g, '')
-    var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
-    if (match) {
-        return '(' + match[1] + ') ' + match[2] + '-' + match[3]
+
+export const simpleFormSubmit = (formData) => async (dispatch) => {
+    const userCollection = db.collection('users')
+    
+    formData.phone = validatePhoneNumber(formData.phone)
+    formData.email = validateEmail(formData.email)
+
+    if (formData.email === null) {
+        dispatch(setFormError('Please enter a valid email address.'))
+    } else if (formData.phone === null) {
+        dispatch(setFormError('Please enter a valid Phone Number (No +1 or "-" is needed.)'))
+    } else if (formData.county === '') {
+        dispatch(setFormError('Please enter a county'))
+    } else {
+        await userCollection.doc(formData.email).set(formData)
+
+        store.dispatch(push(`/resources/${formData.county}`))
+    
+        dispatch(closeSimpleForm())
     }
-    return null
 }
+
+
+
+
 
 
 export const openSimpleForm = () => ({
@@ -22,15 +40,7 @@ export const closeSimpleForm = () => ({
     payload: false
 })
 
-export const simpleFormSubmit = (formData) => async (dispatch) => {
-    const userCollection = db.collection('users')
-
-    formData.phone = formatPhoneNumber(formData.phone)
-
-    await userCollection.doc(formData.email).set(formData)
-
-    store.dispatch(push(`/resources/${formData.county}`))
-
-    dispatch(closeSimpleForm())
-    
-}
+ const setFormError = (error) => ({
+     type: 'SET_FORM_ERROR',
+     payload: error
+ })

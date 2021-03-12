@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
+    counties: [],
     isResourceFormOpen: false,
-    isCountyFormOpen: false,
-    counties: []
+    resourceFormError: null
 }
 
 const resourceFormReducer = (state = INITIAL_STATE, action) => {
@@ -9,31 +9,21 @@ const resourceFormReducer = (state = INITIAL_STATE, action) => {
         case "OPEN_RESOURCE_FORM": {
             return {
                 ...state,
-                isResourceFormOpen: action.payload
+                isResourceFormOpen: action.payload,
+                resourceFormError: null
             }
         }
         case "CLOSE_RESOURCE_FORM": {
             return {
                 ...state,
-                isResourceFormOpen: action.payload
+                isResourceFormOpen: action.payload,
+                resourceFormError: null
             }
         }
-        case "OPEN_COUNTY_FORM": {
+        case "SET_FORM_ERROR": {
             return {
                 ...state,
-                isCountyFormOpen: action.payload
-            }
-        }
-        case "CLOSE_COUNTY_FORM": {
-            return {
-                ...state,
-                isCountyFormOpen: action.payload
-            }
-        }
-        case "SET_COUNTIES": {
-            return {
-                ...state,
-                counties: action.payload
+                resourceFormError: action.payload
             }
         }
         default: return state

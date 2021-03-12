@@ -1,9 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { TextField, Select, MenuItem, FormControl, Modal, InputLabel, Button, Typography } from '@material-ui/core/'
+import { TextField, Select, MenuItem, FormControl, Modal, InputLabel, Button, Typography, withStyles } from '@material-ui/core/'
+import MuiAlert from '@material-ui/lab/Alert';
 import './SimpleForm.css'
 
 import { closeSimpleForm, simpleFormSubmit } from './redux/simpleFormActions'
+
+const styles = theme => ({
+    alert: {
+        marginBottom: '10px'
+    }
+})
 
 
 class SimpleForm extends Component {
@@ -13,7 +20,7 @@ class SimpleForm extends Component {
             name: null,
             email: null,
             phone: null,
-            county: 'allen'
+            county: ''
         }
     }
 
@@ -24,12 +31,13 @@ class SimpleForm extends Component {
 
     render() {
         const { name, email, phone, county } = this.state
-        const { isSimpleFormOpen, closeSimpleForm, simpleFormSubmit } = this.props
-        
+        const { isSimpleFormOpen, closeSimpleForm, simpleFormSubmit, simpleFormError, classes } = this.props
+
         return (
             <Modal open={isSimpleFormOpen} onClose={closeSimpleForm}>
                 <div className='simpleFormForm'>
-                    <Typography variant='h5' style={{marginBottom: '15px'}}>
+                    {simpleFormError ? <MuiAlert className={classes.alert} elevation={6} variant="filled" severity='error'>{simpleFormError}</MuiAlert> : null}
+                    <Typography variant='h5' style={{ marginBottom: '15px' }}>
                         Explore Your Community
                     </Typography>
                     <TextField
@@ -48,21 +56,16 @@ class SimpleForm extends Component {
                         className='simpleFormInputField'
                         onChange={(text) => this.handleChange(text, 'phone')} />
                     <FormControl variant='filled' className='simpleFormInputField'>
-                    <InputLabel>County</InputLabel>
+                        <InputLabel>County</InputLabel>
                         <Select
                             value={county}
                             onChange={(val) => this.handleChange(val, 'county')}
                         >
-                            <MenuItem value={'Allen'}>Allen County</MenuItem>
                             <MenuItem value={'Russell'}>Russell County</MenuItem>
                             <MenuItem value={'Barren'}>Barren County</MenuItem>
-                            <MenuItem value={'Metcalfe'}>Metcalfe County</MenuItem>
-                            <MenuItem value={'Edmonson'}>Edmonson County</MenuItem>
-                            <MenuItem value={'Green'}>Green County</MenuItem>
-                            <MenuItem value={'Warren'}>Warren County</MenuItem>
                         </Select>
                     </FormControl>
-                    <Button variant="contained" color="primary" onClick={() => simpleFormSubmit({name, phone, email, county})}>
+                    <Button variant="contained" color="primary" onClick={() => simpleFormSubmit({ name, phone, email, county })}>
                         Continue
                     </Button>
                 </div>
@@ -72,9 +75,9 @@ class SimpleForm extends Component {
 }
 
 const mapStateToProps = ({ simpleForm }) => {
-    const { isSimpleFormOpen } = simpleForm
-    return { isSimpleFormOpen }
+    const { isSimpleFormOpen, simpleFormError } = simpleForm
+    return { isSimpleFormOpen, simpleFormError }
 }
 
 
-export default connect(mapStateToProps, { closeSimpleForm, simpleFormSubmit })(SimpleForm)
+export default connect(mapStateToProps, { closeSimpleForm, simpleFormSubmit })(withStyles(styles)(SimpleForm))

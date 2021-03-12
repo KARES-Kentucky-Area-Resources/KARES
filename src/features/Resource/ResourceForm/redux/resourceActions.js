@@ -1,42 +1,31 @@
 import { db } from '../../../../shared/services/firebaseConfig'
 import { loadAllResources } from '../../ResourceTable/redux/resourceTableActions'
-
-function formatPhoneNumber(phoneNumberString) {
-    var cleaned = ('' + phoneNumberString).replace(/\D/g, '')
-    var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
-    if (match) {
-        return '(' + match[1] + ') ' + match[2] + '-' + match[3]
-    }
-    return null
-}
-
-
-export const addCounty = (county) => async (dispatch) => {
-    const countyCollection = db.collection('resources')
-
-    countyCollection.doc(county).set()
-
-    dispatch(closeCountyForm())
-}
-
-
-export const setCounties = () => async (dispatch) => {
-
-}
+import { validatePhoneNumber, validateEmail } from '../../../../shared/helperFunctions'
 
 
 export const resourceFormSubmit = (formData) => async (dispatch) => {
     const resourcesCollection = db.collection('resources')
 
-    formData.phone = formatPhoneNumber(formData.phone)
+    formData.phone = validatePhoneNumber(formData.phone)
+    formData.email = validateEmail(formData.email)
 
-    await resourcesCollection.doc(formData.name).set(formData)
+    if (formData.county === '') {
+        dispatch(setFormError('Please select a County.'))
+    } else if (formData.name === '') {
+        dispatch(setFormError('Please Enter a Resource Name.'))
+    } else if (formData.phone === '') {
+        dispatch(setFormError('Please Enter a Valid Phone Number.'))
+    } else if (formData.address === '') {
+        dispatch(setFormError('Please Enter an address.'))
+    } else if (formData.tag === '') {
+        dispatch(setFormError('Please select a tag.'))
+    } else {
+        await resourcesCollection.doc(formData.name).set(formData)
 
-    dispatch(closeResourceForm())
-    dispatch(loadAllResources())
+        dispatch(closeResourceForm())
+        dispatch(loadAllResources())
+    }
 }
-
-
 
 
 
@@ -51,13 +40,8 @@ export const closeResourceForm = () => ({
     payload: false
 })
 
-export const openCountyForm = () => ({
-    type: 'OPEN_COUNTY_FORM',
-    payload: true
-})
-
-export const closeCountyForm = () => ({
-    type: 'CLOSE_COUNTY_FORM',
-    payload: false
+export const setFormError = (error) => ({
+    type: 'SET_FORM_ERROR',
+    payload: error
 })
 

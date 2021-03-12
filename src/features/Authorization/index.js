@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { TextField, Button, Typography } from '@material-ui/core/'
+import MuiAlert from '@material-ui/lab/Alert';
 import './Authorization.css'
 
 import { userSignIn } from './redux/authorizationActions'
@@ -19,7 +20,7 @@ class Authorization extends Component {
     }
 
     render() {
-        const { userSignIn } = this.props
+        const { userSignIn, error } = this.props
         const { email, password } = this.state
         return (
             <div className='authFormMain'>
@@ -43,9 +44,16 @@ class Authorization extends Component {
                         Sign In
                     </Button>
                 </div>
+                { error ? <MuiAlert elevation={6} variant="filled" severity='error'>{error}</MuiAlert>: null}
             </div>
         )
     }
 }
 
-export default connect(null, { userSignIn })(Authorization)
+const mapStateToProps = ({ authorization }) => {
+    const { meta } = authorization
+    const { error } = meta
+    return { error }
+}
+
+export default connect(mapStateToProps, { userSignIn })(Authorization)

@@ -71,13 +71,8 @@ class VisitorsFilter extends Component {
                         <MenuItem value='All'>
                             <em>All</em>
                         </MenuItem>
-                        <MenuItem value={'Allen'}>Allen County</MenuItem>
                         <MenuItem value={'Russell'}>Russell County</MenuItem>
                         <MenuItem value={'Barren'}>Barren County</MenuItem>
-                        <MenuItem value={'Metcalfe'}>Metcalfe County</MenuItem>
-                        <MenuItem value={'Edmonson'}>Edmonson County</MenuItem>
-                        <MenuItem value={'Green'}>Green County</MenuItem>
-                        <MenuItem value={'Warren'}>Warren County</MenuItem>
                     </Select>
                 </FormControl>
 
