@@ -11,9 +11,9 @@ export const resourceFormSubmit = (formData) => async (dispatch) => {
 
     if (formData.county === '') {
         dispatch(setFormError('Please select a County.'))
-    } else if (formData.name === '' || formData.name === null) {
+    } else if (formData.name === '') {
         dispatch(setFormError('Please Enter a Resource Name.'))
-    } else if (formData.phone === '') {
+    } else if (formData.phone === '' || formData.phone === null) {
         dispatch(setFormError('Please Enter a Valid Phone Number.'))
     } else if (formData.address === '') {
         dispatch(setFormError('Please Enter an address.'))
