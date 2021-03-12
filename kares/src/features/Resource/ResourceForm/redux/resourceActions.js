@@ -1,4 +1,5 @@
 import { db } from '../../../../shared/services/firebaseConfig'
+import { loadAllResources } from '../../ResourceTable/redux/resourceTableActions'
 
 function formatPhoneNumber(phoneNumberString) {
     var cleaned = ('' + phoneNumberString).replace(/\D/g, '')
@@ -20,7 +21,6 @@ export const addCounty = (county) => async (dispatch) => {
 
 
 export const setCounties = () => async (dispatch) => {
-    let countyArray = []
 
 }
 
@@ -33,6 +33,7 @@ export const resourceFormSubmit = (formData) => async (dispatch) => {
     await resourcesCollection.doc(formData.name).set(formData)
 
     dispatch(closeResourceForm())
+    dispatch(loadAllResources())
 }
 
 

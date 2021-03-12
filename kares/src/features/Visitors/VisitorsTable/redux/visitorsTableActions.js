@@ -1,7 +1,8 @@
 import { db } from '../../../../shared/services/firebaseConfig'
 
 
-export const loadAllVisitors = (name = '', county = 'All') => async (dispatch) => {
+export const loadAllVisitors = () => async (dispatch) => {
+    console.log('USING DATABASE')
     const visitors = db.collection('users')
     let returnArray = []
 
@@ -21,6 +22,7 @@ export const loadAllVisitors = (name = '', county = 'All') => async (dispatch) =
 
     }
     catch (e) {
+        console.log(e)
     }
 }
 

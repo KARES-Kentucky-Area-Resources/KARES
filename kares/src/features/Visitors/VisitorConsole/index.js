@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import ResourceForm from '../ResourceForm'
+import ResourceForm from '../../Resource/ResourceForm'
 import VisitorsTable from '../VisitorsTable'
 import { loadAllVisitors, filterFetchedVisitors } from '../VisitorsTable/redux/visitorsTableActions'
-import { openResourceForm, closeResourceForm } from '../ResourceForm/redux/resourceFormActions'
+import { openResourceForm, closeResourceForm } from '../../Resource/ResourceForm/redux/resourceActions'
 import { Button, CircularProgress } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 

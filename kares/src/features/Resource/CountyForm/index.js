@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { TextField, Modal, Button, Typography } from '@material-ui/core/'
-import { addCounty, closeCountyForm, openCountyForm } from '../ResourceForm/redux/resourceActions'
+import { addCounty, closeCountyForm } from '../ResourceForm/redux/resourceActions'
 
 
 
@@ -21,7 +21,7 @@ class CountyForm extends Component {
 
     render() {
         const { county } = this.state
-        const { openCountyForm, closeCountyForm, isCountyFormOpen, addCounty } = this.props
+        const { closeCountyForm, isCountyFormOpen, addCounty } = this.props
 
         return (
             <Modal open={isCountyFormOpen} onClose={closeCountyForm}>
@@ -50,4 +50,4 @@ const mapStateToProps = ({ resourceForm }) => {
 }
 
 
-export default connect(mapStateToProps, { addCounty, openCountyForm, closeCountyForm })(CountyForm)
+export default connect(mapStateToProps, { addCounty, closeCountyForm })(CountyForm)
