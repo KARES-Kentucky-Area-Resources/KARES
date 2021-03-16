@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { AppBar, Toolbar, withStyles, Button } from '@material-ui/core'
 import { connect } from 'react-redux'
-import { logOut } from '../../features/Authorization/redux/authorizationActions'
-import VisitorConsole from '../../features/Visitors/VisitorConsole'
-import Authorization from '../../features/Authorization'
-import AdminOptions from '../../features/AdminOptions'
-import ResourceConsole from '../../features/Resource/ResourceConsole'
+import { logOut } from '../../features/Admin/Authorization/redux/authorizationActions'
+import VisitorConsole from '../../features/Admin/Visitors/VisitorConsole'
+import Authorization from '../../features/Admin/Authorization'
+import AdminOptions from '../../features/Admin/AdminOptions'
+import ResourceConsole from '../../features/Admin/Resource/ResourceConsole'
 
 const styles = theme => ({
     navbar: {
@@ -20,9 +20,20 @@ const styles = theme => ({
 })
 
 class Admin extends Component {
+
+    checkPage = () => {
+        const page = this.props.page.match.params.page
+
+        if (page === 'visitor') {
+            return (<VisitorConsole />)
+        } else if (page === 'resources') {
+            return (<ResourceConsole />)
+        } else return (<AdminOptions />)
+    }
+
     render() {
         const { loggedIn, classes, logOut } = this.props
-        const page = this.props.page.match.params.page
+        
         return (
             <div>
                 { loggedIn ?
@@ -35,9 +46,7 @@ class Admin extends Component {
                                 </Button>
                             </Toolbar>
                         </AppBar>
-                        {!page ? <AdminOptions /> : null}
-                        {page === 'visitor' ? <VisitorConsole /> : null}
-                        {page === 'resources' ? <ResourceConsole /> : null}
+                        {this.checkPage()}
                     </div>
                     :
                     <Authorization />

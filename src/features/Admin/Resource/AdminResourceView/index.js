@@ -1,7 +1,7 @@
 import { withStyles, Modal, Typography, FormControl, InputLabel, Select, MenuItem, TextField, Button } from '@material-ui/core'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { closeAdminResourceForm, updateResourceInfo, deleteResource } from '../AdminResourceView/redux/adminResourceViewActions'
+import { closeAdminResourceForm, updateResourceInfo, deleteResource } from './redux/adminResourceViewActions'
 import MuiAlert from '@material-ui/lab/Alert';
 
 const styles = theme => ({

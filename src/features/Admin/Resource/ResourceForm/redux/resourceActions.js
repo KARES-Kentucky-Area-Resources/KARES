@@ -1,6 +1,6 @@
-import { db } from '../../../../shared/services/firebaseConfig'
+import { db } from '../../../../../shared/services/firebaseConfig'
 import { loadAllResources } from '../../ResourceTable/redux/resourceTableActions'
-import { validatePhoneNumber, validateEmail } from '../../../../shared/helperFunctions'
+import { validatePhoneNumber, validateEmail } from '../../../../../shared/helperFunctions'
 
 
 export const resourceFormSubmit = (formData) => async (dispatch) => {
