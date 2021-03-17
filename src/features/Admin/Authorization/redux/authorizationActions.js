@@ -12,15 +12,14 @@ export const userSignIn = (email, password) => async (dispatch) => {
         dispatch(userSignInSuccess({ fbToken, userId }))
     }
     catch (e) {
-        console.log(e)
-        if (e.code.includes('auth/user-not-found')) {
-            await auth.createUserWithEmailAndPassword(email, password)
-            const response = await auth.signInWithEmailAndPassword(email, password)
-            const fbToken = await response.user.getIdToken()
-            const userId = response.user.uid
-            dispatch(userSignInSuccess({ fbToken, userId }))
-            return
-        }
+        // if (e.code.includes('auth/user-not-found')) {
+        //     await auth.createUserWithEmailAndPassword(email, password)
+        //     const response = await auth.signInWithEmailAndPassword(email, password)
+        //     const fbToken = await response.user.getIdToken()
+        //     const userId = response.user.uid
+        //     dispatch(userSignInSuccess({ fbToken, userId }))
+        //     return
+        // }
         dispatch(userSignInFailed(e.message))
     }
 }

@@ -6,9 +6,11 @@ import { validatePhoneNumber, validateEmail } from '../../../shared/helperFuncti
 
 export const simpleFormSubmit = (formData) => async (dispatch) => {
     const userCollection = db.collection('users')
-    
+
     formData.phone = validatePhoneNumber(formData.phone)
     formData.email = validateEmail(formData.email)
+
+    dispatch(startFormSubmission())
 
     if (formData.email === null) {
         dispatch(setFormError('Please enter a valid email address.'))
@@ -20,7 +22,7 @@ export const simpleFormSubmit = (formData) => async (dispatch) => {
         await userCollection.doc(formData.email).set(formData)
 
         store.dispatch(push(`/resources/${formData.county}`))
-    
+
         dispatch(closeSimpleForm())
     }
 }
@@ -40,7 +42,11 @@ export const closeSimpleForm = () => ({
     payload: false
 })
 
- const setFormError = (error) => ({
-     type: 'SET_FORM_ERROR',
-     payload: error
- })
+const setFormError = (error) => ({
+    type: 'SET_FORM_ERROR',
+    payload: error
+})
+
+const startFormSubmission = () => ({
+    type: 'START_FORM_SUBMISSION'
+})

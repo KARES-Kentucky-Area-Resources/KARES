@@ -6,6 +6,7 @@ import VisitorConsole from '../../features/Admin/Visitors/VisitorConsole'
 import Authorization from '../../features/Admin/Authorization'
 import AdminOptions from '../../features/Admin/AdminOptions'
 import ResourceConsole from '../../features/Admin/Resource/ResourceConsole'
+import LoadingScreen from '../LoadingScreen/LoadingScreen'
 
 const styles = theme => ({
     navbar: {
@@ -21,7 +22,7 @@ const styles = theme => ({
 
 class Admin extends Component {
 
-    checkPage = () => {
+    renderPage = () => {
         const page = this.props.page.match.params.page
 
         if (page === 'visitor') {
@@ -31,22 +32,28 @@ class Admin extends Component {
         } else return (<AdminOptions />)
     }
 
+    renderTemplate() {
+        return (
+            <AppBar className={this.props.classes.navbar}>
+                <Toolbar className={this.props.classes.toolbar}>
+                    <p>Admin Console</p>
+                    <Button variant='contained' onClick={() => this.props.logOut()}>
+                        Log Out
+                </Button>
+                </Toolbar>
+            </AppBar>
+        )
+    }
+
     render() {
-        const { loggedIn, classes, logOut } = this.props
-        
+        const { loggedIn } = this.props
+
         return (
             <div>
                 { loggedIn ?
                     <div>
-                        <AppBar className={classes.navbar}>
-                            <Toolbar className={classes.toolbar}>
-                                <p>Admin Console</p>
-                                <Button variant='contained' onClick={() => logOut()}>
-                                    Log Out
-                                </Button>
-                            </Toolbar>
-                        </AppBar>
-                        {this.checkPage()}
+                        {this.renderTemplate()}
+                        {this.renderPage()}
                     </div>
                     :
                     <Authorization />

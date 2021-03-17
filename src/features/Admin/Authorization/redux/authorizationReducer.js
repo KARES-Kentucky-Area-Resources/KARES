@@ -47,7 +47,10 @@ const authFormReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 loggedIn: false,
-                user: {}
+                user: {},
+                meta: {
+                    error: 'User logged out successfully!'
+                }
             }
         }
         default: return state

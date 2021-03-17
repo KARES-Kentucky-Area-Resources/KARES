@@ -1,14 +1,45 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { TextField, Select, MenuItem, FormControl, Modal, InputLabel, Button, Typography, withStyles } from '@material-ui/core/'
+import { TextField, Select, MenuItem, FormControl, Modal, InputLabel, Button, Typography, withStyles, CircularProgress } from '@material-ui/core/'
 import MuiAlert from '@material-ui/lab/Alert';
-import './SimpleForm.css'
 
 import { closeSimpleForm, simpleFormSubmit } from './redux/simpleFormActions'
 
 const styles = theme => ({
     alert: {
         marginBottom: '10px'
+    },
+    simpleForm: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        zIndex: '100',
+        width: '90%',
+        maxWidth: '750px',
+        borderRadius: '15px',
+        padding: '17px 10px',
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
+        backgroundColor: 'rgb(255, 255, 255)',
+    },
+    simpleFormInputField: {
+        width: '85%',
+        marginBottom: '15px'
+    },
+    loadingContainer: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        borderRadius: '15px',
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.75)',
     }
 })
 
@@ -31,11 +62,11 @@ class SimpleForm extends Component {
 
     render() {
         const { name, email, phone, county } = this.state
-        const { isSimpleFormOpen, closeSimpleForm, simpleFormSubmit, simpleFormError, classes } = this.props
+        const { isSimpleFormOpen, closeSimpleForm, simpleFormSubmit, simpleFormError, classes, isSubmitting } = this.props
 
         return (
             <Modal open={isSimpleFormOpen} onClose={closeSimpleForm}>
-                <div className='simpleFormForm'>
+                <div className={classes.simpleForm}>
                     {simpleFormError ? <MuiAlert className={classes.alert} elevation={6} variant="filled" severity='error'>{simpleFormError}</MuiAlert> : null}
                     <Typography variant='h5' style={{ marginBottom: '15px' }}>
                         Explore Your Community
@@ -43,19 +74,19 @@ class SimpleForm extends Component {
                     <TextField
                         label="Name"
                         variant="filled"
-                        className='simpleFormInputField'
+                        className={classes.simpleFormInputField}
                         onChange={(text) => this.handleChange(text, 'name')} />
                     <TextField
                         label="Email"
                         variant="filled"
-                        className='simpleFormInputField'
+                        className={classes.simpleFormInputField}
                         onChange={(text) => this.handleChange(text, 'email')} />
                     <TextField
                         label="Phone"
                         variant="filled"
-                        className='simpleFormInputField'
+                        className={classes.simpleFormInputField}
                         onChange={(text) => this.handleChange(text, 'phone')} />
-                    <FormControl variant='filled' className='simpleFormInputField'>
+                    <FormControl variant='filled' className={classes.simpleFormInputField}>
                         <InputLabel>County</InputLabel>
                         <Select
                             value={county}
@@ -68,6 +99,7 @@ class SimpleForm extends Component {
                     <Button variant="contained" color="primary" onClick={() => simpleFormSubmit({ name, phone, email, county })}>
                         Continue
                     </Button>
+                    {isSubmitting ? <div className={classes.loadingContainer}><CircularProgress color='primary' /></div> : null}
                 </div>
             </Modal>
         )
@@ -75,8 +107,8 @@ class SimpleForm extends Component {
 }
 
 const mapStateToProps = ({ simpleForm }) => {
-    const { isSimpleFormOpen, simpleFormError } = simpleForm
-    return { isSimpleFormOpen, simpleFormError }
+    const { isSimpleFormOpen, simpleFormError, isSubmitting } = simpleForm
+    return { isSimpleFormOpen, simpleFormError, isSubmitting }
 }
 
 
