@@ -8,7 +8,7 @@ import thunk from 'redux-thunk'
 import rootReducer from './redux/rootReducer'
 
 import Homepage from './screens/Homepage/Homepage';
-import Resources from './screens/Resources/Resources';
+import CountyResources from './screens/CountyResources/CountyResources';
 import ErrorPage from './screens/ErrorPage/Error';
 import Admin from './screens/Admin/Admin';
 
@@ -28,7 +28,7 @@ function App() {
             <Route 
                 exact
                 path='/resources/:county?'
-                component={(props) => <Resources county={props} key={props.match.params.county} />} />
+                component={(props) => <CountyResources county={props} key={props.match.params.county} />} />
             <Route 
                 exact 
                 path='/admin/:page?' 

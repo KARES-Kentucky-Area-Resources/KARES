@@ -1,4 +1,6 @@
 const INITIAL_STATE = {
+    currentCounty: '',
+    design: {},
     allResources: [],
     form: {
         isOpen: false,
@@ -11,7 +13,9 @@ const countyResourcesReducer = (state = INITIAL_STATE, action) => {
         case 'LOAD_COUNTY_RESOURCES': {
             return {
                 ...state,
-                allResources: action.payload
+                currentCounty: action.payload.county,
+                design: action.payload.design,
+                allResources: action.payload.allResources
             }
         }
         case 'VIEW_COUNTY_RESOURCE': {
